@@ -78,6 +78,7 @@ const OAUTH_TEST_CONFIG = {
     authPrefix: "Bearer ",
   },
   codebuddy: { tokenExists: true },
+  workbuddy: { tokenExists: true },
 };
 
 async function probeClineAccessToken(accessToken) {

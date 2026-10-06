@@ -12,6 +12,8 @@ const ALIAS_TO_PROVIDER_ID = {
   kc: "kilocode",
   kmc: "kimi-coding",
   cl: "cline",
+  wb: "workbuddy",
+  workbuddy: "workbuddy",
   oc: "opencode",
   ocg: "opencode-go",
   // TTS providers

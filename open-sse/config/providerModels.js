@@ -216,6 +216,13 @@ export const PROVIDER_MODELS = {
     { id: "kwaipilot/kat-coder-pro", name: "KAT Coder Pro" },
   ],
 
+  wb: [  // WorkBuddy AI
+    { id: "deepseek-v4.1-flash", name: "DeepSeek V4.1 Flash" },
+    { id: "deepseek-v4.1-flash-sg", name: "DeepSeek V4.1 Flash SG" },
+    { id: "hy4-preview-f", name: "HY4 Preview F" },
+    { id: "deepseek-v4-pro", name: "DeepSeek V4 Pro" },
+  ],
+
   // API Key Providers (alias = id)
   openai: [
     // Flagship models
@@ -881,6 +888,7 @@ const OAUTH_ALIASES = {
   kilocode: "kc",
   cline: "cl",
   opencode: "oc",
+  workbuddy: "wb",
   vertex: "vertex",
   "vertex-partner": "vertex-partner",
 };

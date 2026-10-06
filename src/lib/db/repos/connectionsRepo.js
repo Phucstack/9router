@@ -88,10 +88,28 @@ function reorderInTx(db, providerId) {
   });
 }
 
+function extractJwtEmail(token) {
+  try {
+    if (!token || typeof token !== "string") return null;
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const b64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    const padded = b64 + "=".repeat((4 - (b64.length % 4)) % 4);
+    const payload = JSON.parse(Buffer.from(padded, "base64").toString("utf8"));
+    return payload.email || payload.mail || payload.preferred_username || null;
+  } catch {
+    return null;
+  }
+}
+
 export async function createProviderConnection(data) {
   const db = await getAdapter();
   const now = new Date().toISOString();
   let result;
+
+  if (!data.email && (data.accessToken || data.idToken)) {
+    data.email = extractJwtEmail(data.idToken) || extractJwtEmail(data.accessToken) || null;
+  }
 
   db.transaction(() => {
     const all = db.all(`SELECT * FROM providerConnections WHERE provider = ?`, [data.provider]).map(rowToConn);

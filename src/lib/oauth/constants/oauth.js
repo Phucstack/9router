@@ -252,6 +252,17 @@ export const CODEBUDDY_CONFIG = {
   pollInterval: 5000,
 };
 
+// WorkBuddy AI OAuth Configuration (Browser OAuth Polling Flow)
+export const WORKBUDDY_CONFIG = {
+  baseUrl: "https://www.workbuddy.ai",
+  stateUrl: "https://www.workbuddy.ai/v2/plugin/auth/state",
+  tokenUrl: "https://www.workbuddy.ai/v2/plugin/auth/token",
+  refreshUrl: "https://www.workbuddy.ai/v2/plugin/auth/token/refresh",
+  userAgent: "WorkBuddyAI/5.5.2",
+  platform: "workbuddy-ai",
+  pollInterval: 5000,
+};
+
 // OAuth timeout (5 minutes)
 export const OAUTH_TIMEOUT = 300000;
 
@@ -273,4 +284,5 @@ export const PROVIDERS = {
   CLINE: "cline",
   GITLAB: "gitlab",
   CODEBUDDY: "codebuddy",
+  WORKBUDDY: "workbuddy",
 };

@@ -360,6 +360,10 @@ export const PROVIDERS = {
     baseUrl: "https://copilot.tencent.com/v1/chat/completions",
     format: "openai",
   },
+  workbuddy: {
+    baseUrl: "https://www.workbuddy.ai/v2/chat/completions",
+    format: "openai",
+  },
   opencode: {
     baseUrl: "https://opencode.ai",
     format: "openai",

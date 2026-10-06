@@ -105,6 +105,23 @@ export class DefaultExecutor extends BaseExecutor {
         break;
       default:
         if (this.provider?.startsWith?.("anthropic-compatible-")) {
+          // Overlay live cached headers from real Claude Code client if targeting Freemodel cc endpoint
+          const baseUrl = credentials?.providerSpecificData?.baseUrl || "";
+          const isFreemodelCc = baseUrl.includes("cc.freemodel.dev");
+          
+          if (isFreemodelCc) {
+            const cached = getCachedClaudeHeaders();
+            if (cached) {
+              for (const lcKey of Object.keys(cached)) {
+                const titleKey = lcKey.replace(/(^|-)([a-z])/g, (_, sep, c) => sep + c.toUpperCase());
+                if (titleKey !== lcKey && headers[titleKey] !== undefined) {
+                  delete headers[titleKey];
+                }
+              }
+              Object.assign(headers, cached);
+            }
+          }
+
           if (credentials.apiKey) {
             headers["x-api-key"] = credentials.apiKey;
           } else if (credentials.accessToken) {
@@ -137,7 +154,7 @@ export class DefaultExecutor extends BaseExecutor {
     // Strip first-party Claude Code identity headers for non-Anthropic anthropic-compatible upstreams
     if (this.provider?.startsWith?.("anthropic-compatible-")) {
       const baseUrl = credentials?.providerSpecificData?.baseUrl || "";
-      const isOfficialAnthropic = baseUrl === "" || baseUrl.includes("api.anthropic.com");
+      const isOfficialAnthropic = baseUrl === "" || baseUrl.includes("api.anthropic.com") || baseUrl.includes("cc.freemodel.dev");
       if (!isOfficialAnthropic) {
         delete headers["anthropic-dangerous-direct-browser-access"];
         delete headers["Anthropic-Dangerous-Direct-Browser-Access"];
