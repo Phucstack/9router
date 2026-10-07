@@ -70,6 +70,21 @@ function CallbackContent() {
       console.log("localStorage failed:", e);
     }
 
+    // Auto-exchange for direct tab flows
+    if (code) {
+      try {
+        fetch("/api/oauth/cline/exchange", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            code,
+            redirectUri: `${window.location.origin}/callback`,
+            state,
+          }),
+        }).catch((err) => console.log("Auto-exchange failed:", err));
+      } catch (e) {}
+    }
+
     if (!(code || error)) {
       setTimeout(() => setStatus("manual"), 0);
       return;
